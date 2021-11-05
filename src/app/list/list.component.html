@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<div class="list">
+  <ul class="list-group" *ngFor="let video of videos">
+    <li class="list-group-item">
+      <a id="title{{video.id}}" class="h5">{{video.title}}</a>
+      <button (click)="ChangeMode(video.id)" class="btn btn-outline-info pull-right" role="button" aria-disabled="true"
+        [disabled]="DetailsMode"> <i class="fa fa-info"></i> Details</button>
+      <button id="button{{video.id}}" (click)="ChangeButtonsMode(video.id)" class="btn btn-outline-primary pull-right"
+        role="button" aria-disabled="true"> <i class="fa fa-cart-plus"></i> Rent </button>
+    </li>
+    <li class="list-group-item" *ngIf="video.id==chosenMovieId">
+      <app-details *ngIf="DetailsMode" [videosDetail]="videoForDetails" (changeMode)="ChangeDetailsMode()"
+        (updateAmount)="updateAmount($event, video.id)"></app-details>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<div class="container">
+    <table>
+        <tr>
+            <td rowspan="5" class="poster"><img src="{{videosDetail.imagePath}}" class="img-thumbnail"></td>
+            <td class="spacer" id = "title">Title: {{videosDetail.title}} </td>
+
+            <td rowspan="2"><button (click)="changeAmount()" class="btn btn-outline-primary" role="button"
+                    aria-disabled="true" [disabled]="disableMode"> <i class="fa fa-cart-plus"></i> Rent </button></td>
+        </tr>
+        <tr>
+            <td>Category: {{videosDetail.category}}</td>
+        </tr>
+        <tr>
+            <td class="spacer">Date added: {{videosDetail.dateAdded | date:'yyyy-MM-dd'}} </td>
+            <td>
+                <button (click)="changeDetailsMode()" class="btn btn-outline-danger" role="button" aria-disabled="true">
+                    <i class="fa fa-times-circle"></i> Close</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Production: {{videosDetail.production}} </td>
+        </tr>
+        <tr>
+            <td>Amount: {{videosDetail.amount}} </td>
+        </tr>
+        <tr>
+            <td class="smaller-spacer"></td>
+        </tr>
+    </table>
+    <p *ngIf="!modeMore">Description: {{videosDetail.description | truncate:200}} </p>
+    <p *ngIf="modeMore">Description: {{videosDetail.description}} </p>
+      <button (click)="ChangeModeMore()" class="btn btn-outline-secondary btn-sm">{{btnVal}}</button>
+</div>
