@@ -30,5 +30,11 @@
     </table>
     <p *ngIf="!modeMore">Description: {{videosDetail.description | truncate:200}} </p>
     <p *ngIf="modeMore">Description: {{videosDetail.description}} </p>
-      <button (click)="ChangeModeMore()" class="btn btn-outline-secondary btn-sm">{{btnVal}}</button>
+      <button (click)="changeModeMore()" class="btn btn-outline-secondary btn-sm">{{btnVal}}</button>
 </div>
+<button (click)="changeToEditMode()" class="btn btn-outline-success pull-right"
+  role="button" aria-disabled="true" *ngIf="!editMode"> <i class="fa fa-pencil"></i> {{this.buttonTitle}}</button>
+  <ul class="list-group" *ngIf="editMode">
+    <li class="list-group-item" >
+  <app-form class="mt-5" (updateVideo)="updateVideo($event)"  (changeModes)="changeEditMode($event)" [videosForm]="videosDetail" [buttonT]="buttonTitle" *ngIf="editMode" ></app-form>
+</li></ul>

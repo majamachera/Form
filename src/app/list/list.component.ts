@@ -1,32 +1,19 @@
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { ECategory } from '../ecategory';
+import { Video } from '../video';
 
-import { Component,  OnInit } from '@angular/core';
-enum ECategory {
-  action = "action",
-  sifi = "si-fi",
-  horror = "horror",
-  thriller = "thriller",
-  drama = "drama"
-}
-interface Video {
-  id: number;
-  title: string;
-  imagePath: string;
-  category: ECategory;
-  dateAdded: Date;
-  production: string;
-  amount: number;
-  description: string;
 
-}
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnChanges {
   DetailsMode = false;
   videoForDetails: any;
+  addMode = false;
   chosenMovieId = 0;
+  buttonTitle: string = "Add";
   videos: Video[]=[];
   titles: string[]=["THE PURSUIT OF HAPPYNESS","INCEPTION","THE BUTTERFLY EFFECT", "THE SHINING"];
   paths: string[]=["./assets/7140020.6.jpg", "./assets/7331483.6.jpg",  "./assets/7714886.6.jpg",  "./assets/7477309.6.jpg",]
@@ -40,6 +27,14 @@ export class ListComponent implements OnInit {
   "Haunted by a persistent writer's block, the aspiring author and recovering alcoholic, Jack Torrance, drags his wife, Wendy, and his gifted son, Danny, up snow-capped Colorado's secluded Overlook Hotel after taking up a job as an off-season caretaker. As the cavernous hotel shuts down for the season, the manager gives Jack a grand tour, and the facility's chef, the ageing Mr Hallorann, has a fascinating chat with Danny about a rare psychic gift called The Shining, making sure to warn him about the hotel's abandoned rooms, and, in particular, the off-limits Room 237. However, instead of overcoming the dismal creative rut, little by little, Jack starts losing his mind, trapped in an unforgiving environment of seemingly endless snowstorms, and a gargantuan silent prison riddled with strange occurrences and eerie visions. Now, the incessant voices inside Jack's head demand sacrifice. Is Jack capable of murder?"]
  
   constructor() { }
+  ngOnChanges(changes: SimpleChanges): void {
+    for (let i = 0; i < this.titles.length; i++) {
+      this.videos[i] = {
+        id: i+1, title: this.titles[i], imagePath: this.paths[i], category: this.categories[i], dateAdded: this.dates[i], production: this.productions[i], amount: this.amounts[i],
+        description: this.descriptions[i]
+      }
+    }
+  }
   ngOnInit(): void {
     for (let i = 0; i < this.titles.length; i++) {
       this.videos[i] = {
@@ -48,16 +43,22 @@ export class ListComponent implements OnInit {
       }
     }
   }
-  public ChangeMode(id: number) {
+  addVideos(videos: Video[]){
+    this.videos = videos;
+  }
+  public changeMode(id: number) {
     this.chosenMovieId = id;
     this.DetailsMode = !this.DetailsMode;
     this.videoForDetails = this.videos[id - 1];
   }
-  ChangeDetailsMode() {
+  public changeToAddMode(){
+    this.addMode = true;
+  }
+  changeDetailsMode() {
     this.DetailsMode = !this.DetailsMode;
     this.chosenMovieId = 0;
   }
-  ChangeButtonsMode(id: number) {
+  changeButtonsMode(id: number) {
     if (this.videos[id - 1].amount > 1) {
       this.videos[id - 1].amount = (this.videos[id - 1].amount) - 1;
     }
@@ -76,5 +77,11 @@ export class ListComponent implements OnInit {
   initChanges(id: number) {
     (<HTMLInputElement>document.getElementById(`title${id}`)).style.color = "red";
     (<HTMLInputElement>document.getElementById(`button${id}`)).setAttribute('disabled', 'disabled');
+  }
+  changeAddMode(mode: boolean){
+    this.addMode = mode;
+  }
+  updateVideo(video: Video, id: number){
+    this.videos[id-1] = video;
   }
 }

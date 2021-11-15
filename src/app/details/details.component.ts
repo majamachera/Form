@@ -1,4 +1,7 @@
+
 import { Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Video } from '../video';
+
 
 @Component({
   selector: 'app-details',
@@ -7,22 +10,32 @@ import { Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, Sim
 })
 export class DetailsComponent implements  OnChanges, DoCheck  {
  
-  @Input() videosDetail: any;
+  @Input() videosDetail!: Video;
   disableMode = false;
+  buttonTitle: string = "Edit";
   modeMore = false;
+  editMode = false;
+
+
+
+  
   btnVal = "Read More";
   @Output() changeMode = new EventEmitter<boolean>();
   @Output() updateAmount = new EventEmitter<number>();
+  @Output() updateThisVideo = new EventEmitter<Video>()
   constructor() { }
   ngDoCheck(): void {
-    this.ChangeButtonAndTitleMode();
+    this.changeButtonAndTitleMode();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    this.ChangeButtonAndTitleMode();
+    this.changeButtonAndTitleMode();
   }
  
   changeDetailsMode() {
     this.changeMode.emit();
+  }
+  public changeToEditMode(){
+    this.editMode = true;
   }
   changeAmount() {
     if (this.videosDetail.amount > 1) {
@@ -34,13 +47,16 @@ export class DetailsComponent implements  OnChanges, DoCheck  {
     }
     this.updateAmount.emit(this.videosDetail.amount)
   }
-  ChangeButtonAndTitleMode() {
+  changeButtonAndTitleMode() {
     if (this.videosDetail.amount == 0) {
       this.disableMode = true;
       (<HTMLInputElement>document.getElementById(`title`)).style.color = "red";
     }
   }
-  ChangeModeMore() {
+  changeEditMode(mode: boolean){
+    this.editMode = mode;
+  }
+  changeModeMore() {
     this.modeMore = !this.modeMore;
     if(this.btnVal == "Read More"){
       this.btnVal = "Read Less"
@@ -48,6 +64,11 @@ export class DetailsComponent implements  OnChanges, DoCheck  {
     else{
       this.btnVal = "Read More"
     }
+   
     }
-
+    updateVideo(video: Video){
+      this.videosDetail = video;
+      this.updateThisVideo.emit(this.videosDetail);
+    }
+    
 }
