@@ -1,0 +1,19 @@
+<div class="container">
+  <app-quote-form *ngIf="changeMode" (changeModes)="changeFormMode()"></app-quote-form>
+    <button  class="btn btn-outline-success pull-right" (click)="changeFormMode()"
+    role="button" aria-disabled="true" *ngIf="!changeMode "> <i class="fa fa-plus"></i> Add new quote</button>
+    
+    <h1>Funny quotes from "Friends"</h1>
+    <h3>Guess who said these words if you don't remember, click on the quote</h3>
+<ul>
+    <li *ngFor="let quote of quotes" (click)="QuoteSelected(quote.id)"  [routerLink]="['/quotes', quote.id]">
+    <p >{{quote.id}}. {{quote.quote}}</p>  
+    <app-quote-details *ngIf="quote.id==this.selectedId" [character]="quote.character"></app-quote-details>
+    
+    </li>
+    
+
+  </ul>
+ 
+
+</div>

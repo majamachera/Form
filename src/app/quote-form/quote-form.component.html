@@ -1,0 +1,16 @@
+<div class="container" >
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <p>
+          <label for="exampleFormControlInput1" >Funny Quote:</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"  formControlName="quote"></textarea>
+  
+        </p>
+        <p>
+          <label for="exampleFormControlInput1" >Character who said that:</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="character" />
+        </p>
+        <p>
+          <button type="submit" class="btn btn pull-right btn-success" [disabled]="!form.valid">Dodaj</button>
+        </p>
+      </form>
+</div>

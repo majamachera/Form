@@ -8,6 +8,14 @@ import { CustomPipePipe } from '../services/custom-pipe.pipe';
 import { FormComponent } from './form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { AppRoutingModule } from './app-routing.module';
+import { QuotesComponent } from './quotes/quotes.component';
+import { NavComponent } from './nav/nav.component';
+import { PostersComponent } from './posters/posters.component';
+import { HttpClientModule } from '@angular/common/http';
+import { QuoteFormComponent } from './quote-form/quote-form.component';
+import { QuoteDetailsComponent } from './quote-details/quote-details.component';
+import { NotFoundComponentComponent } from './not-found-component/not-found-component.component';
 
 @NgModule({
   declarations: [
@@ -15,11 +23,19 @@ import { DatePipe } from '@angular/common';
     ListComponent,
     DetailsComponent,
     CustomPipePipe,
-    FormComponent
+    FormComponent,
+    QuotesComponent,
+    NavComponent,
+    PostersComponent,
+    QuoteFormComponent,
+    QuoteDetailsComponent,
+    NotFoundComponentComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     ReactiveFormsModule,
+    AppRoutingModule,
     
   ],
   providers: [
